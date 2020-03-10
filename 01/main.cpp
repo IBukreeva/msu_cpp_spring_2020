@@ -15,6 +15,7 @@ int main(void){
 
 
     //test1 - просто тест
+    //в a0 должно быть ничего, для a1 и a4 память выделилась 
     {
         char * a0 =alloc(100); //должно быть ничего
         makeAllocator(maxSize);
@@ -22,7 +23,7 @@ int main(void){
         char * a1 = alloc(100);
         char * a4 = alloc(100);
 
-        if(a1!=nullptr && a0==nullptr && a4==nullptr) std::cout<< "works\n";
+        if(a1!=nullptr && a0==nullptr && a4!=nullptr) std::cout<< "works1\n";
     }
     delete mem; mem=nullptr;
 
@@ -33,7 +34,7 @@ int main(void){
 
         char * a1 = alloc(500);
         char * a2 = alloc(600);
-        if(a1!=nullptr && a2==nullptr) std::cout<< "works\n";
+        if(a1!=nullptr && a2==nullptr) std::cout<< "works2\n";
     }
     delete mem; mem=nullptr;
 
@@ -43,7 +44,7 @@ int main(void){
         makeAllocator(maxSize);
 
         char * a1 = alloc(1500);
-        if(a1==nullptr) std::cout<< "works\n";    
+        if(a1==nullptr) std::cout<< "works3\n";    
     }
      delete mem; mem=nullptr;
 
@@ -58,7 +59,7 @@ int main(void){
         char * a1 = alloc(500);
         reset();
         char * a5 = alloc(700);
-        if(a1!=nullptr && a5!=nullptr) std::cout<< "works\n";
+        if(a1!=nullptr && a5!=nullptr) std::cout<< "works4\n";
     }
     delete mem; mem=nullptr;
 
