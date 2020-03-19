@@ -2,10 +2,6 @@
 #include <cstring>
 #include "parser.h"
 
-//using onStrNum = void(*) (const char* string);
-//using onStartComplete = void(*) (void);
-
-
 onStrNum onStringCall = defaultOnStringFound;
 onStrNum onNumberCall = defaultOnNumberFound;
 onStartComplete onStartCall = defaultStartParsing;
