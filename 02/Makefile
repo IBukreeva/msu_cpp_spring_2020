@@ -14,3 +14,4 @@ parser.o: parser.cpp parser.h
   
 clean:  
 	rm -rf *.o parser
+
