@@ -23,5 +23,5 @@ private:
     int size_cols;
     
 };
-
+ 
 #endif /* MATRIX */
