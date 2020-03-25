@@ -7,7 +7,7 @@
 #define check_throw(expr, err) do { try { expr; } catch (const err&) { break ; } catch (...) { } std::cout << "line " << __LINE__ << '\n'; } while(0)
 
 
-//нашла этот тест у Максима в домашних работах
+//нашла этот тест у Максима в домашних работах 
 int main()
 {
     int n = 0;
