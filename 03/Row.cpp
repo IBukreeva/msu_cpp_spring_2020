@@ -1,7 +1,6 @@
 #include "Row.h"
 #include <iostream>
 
-
 Row::Row(int inSize){
     data = new int[inSize];
     size=inSize;
