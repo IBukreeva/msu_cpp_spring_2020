@@ -21,10 +21,8 @@ bool Row::operator!=(Row& r) const{
     for(int i=0;i<size;i++){
         if(data[i]!=r.data[i]) return true;
     }
-
     return false;
 }
-
 
 bool Row::operator==(Row& r) const{
     if(size!=r.getSize()) return false;
