@@ -10,7 +10,6 @@ Matrix::Matrix(int size_row, int size_col) {
     for(int i=0;i<size_rows;i++){
         rows[i] = new Row(size_cols);
     }
-
 }
 
 Matrix::~Matrix() {
@@ -75,5 +74,4 @@ void Matrix::operator =(Matrix& matr){
     for(int i=0;i<size_rows;i++){
         *rows[i]=*matr.rows[i];
     }
-
 }
