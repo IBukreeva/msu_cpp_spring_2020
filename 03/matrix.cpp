@@ -1,8 +1,6 @@
 #include <iostream>
 #include "matrix.h"
 
-//не уверена примерно во многих вещах отсюда..
-
 Matrix::Matrix(int row_size, int col_size) {
     size_rows = row_size;
     size_cols = col_size;
