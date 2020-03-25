@@ -5,7 +5,7 @@ matrix: main.o matrix.o Row.o
  
 test: matrix  
 	./matrix
-	
+	  
 main.o: main.cpp matrix.h 
 	g++ -c main.cpp  
   
