@@ -1,44 +1,45 @@
 #include <iostream>
 #include "matrix.h"
 
+//не уверена примерно во многих вещах отсюда..
 
-Matrix::Matrix(int size_row, int size_col) {
-    size_rows = size_row;
-    size_cols = size_col;
+Matrix::Matrix(int row_size, int col_size) {
+    size_rows = row_size;
+    size_cols = col_size;
 
     rows = (Row**) malloc(size_rows*sizeof(Row*));
     for(int i=0;i<size_rows;i++){
         rows[i] = new Row(size_cols);
-    } 
+    }
 }
 
 Matrix::~Matrix() {
     for(int i=0;i<size_rows;i++){
-        free(rows[i]);
+        rows[i]->~Row();
     }
     free(rows);
     size_cols=0;
     size_rows=0;
 }
 
-
 int Matrix::getRows() const{
     return size_rows;
 }
-     
+
 int Matrix::getColumns() const{
     return size_cols;
 }
 
 void Matrix::operator *= (int x){
-    
+
     for(int i=0;i<size_rows;i++){
         *rows[i] *= x;
     }
-
 }
 
+
 bool Matrix::operator ==(const Matrix& matr) const{
+
     if(size_rows!=matr.getRows()) return false;
     if(size_cols!=matr.getColumns()) return false;
 
@@ -48,7 +49,8 @@ bool Matrix::operator ==(const Matrix& matr) const{
     return true;
 }
 
-bool Matrix::operator !=(Matrix& matr) const{ 
+bool Matrix::operator !=(const Matrix& matr) const{ 
+
     if(size_rows!=matr.getRows()) return true;
     if(size_cols!=matr.getColumns()) return true;
 
