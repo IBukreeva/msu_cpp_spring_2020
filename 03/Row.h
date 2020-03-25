@@ -1,6 +1,6 @@
 #ifndef ROW_H
 #define ROW_H
- 
+
 class Row{
     friend class Matrix;
 public:
