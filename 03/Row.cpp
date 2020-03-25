@@ -59,5 +59,5 @@ Row& Row::operator =(Row& r){
         data[i]=r.data[i];
     }
     return *this;
-
+ 
 }
