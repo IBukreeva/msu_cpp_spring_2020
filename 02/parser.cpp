@@ -2,40 +2,41 @@
 #include <cstring>
 #include "parser.h"
 
-onStrNum onStringCall = defaultOnStringFound;
-onStrNum onNumberCall = defaultOnNumberFound;
+onString onStringCall = defaultOnStringFound;
+onNumber onNumberCall = defaultOnNumberFound;
 onStartComplete onStartCall = defaultStartParsing;
 onStartComplete onCompleteCall = defaultCompleteParsing;
 
 void parse(const char * text){
 
-    onStartCall(); //мне кажется, что даже если строка пустая,мы же ее рассматриваем и должны об этом сказать
+    onStartCall();
 
     int i=0;
-    while(i<strlen(text)){
+    int len_text=strlen(text);
+    while(i<len_text){
         if(text[i]==' '){ i++; continue;}
 
-        else if(text[i]>47 && text[i]<58){ //можно так отделять числа?
-            char* num = new char[11];
+        else if(text[i]>='0' && text[i]<='9'){ //можно так находить числа?
+            int number = 0; 
             int j=i;
-            while(j<strlen(text) && text[j]!=' '){
-                num[j-i]=text[j];
+            while(j<len_text && text[j]!=' '){
+                number = number*10 + text[j]-'0'; //получается, что диапазон ограничен int
                 j++;
             }
-            num[j-i]='\0';
             i=j;
-            onNumberCall((const char*)num);
+            onNumberCall(number);
         }
         else{
-            char* str = new char[11];
+            char* str = (char*)malloc((len_text-i)*sizeof(char)); 
             int j=i;
-            while(j<strlen(text) && text[j]!=' '){
+            while(j<len_text && text[j]!=' '){
                 str[j-i]=text[j];
                 j++;
             }
             str[j-i]='\0';
             i=j;
-            onStringCall((const char*)str);
+            onStringCall(str);
+            free (str);
         }
     }
 
@@ -43,10 +44,10 @@ void parse(const char * text){
     return ;
 }
 
-void registerOnStringCallback(onStrNum callback){
+void registerOnStringCallback(onString callback){
     onStringCall=callback;
 }
-void registerOnNumberCallback(onStrNum callback){
+void registerOnNumberCallback(onNumber callback){
     onNumberCall=callback;
 }
 void registerOnStartCallback(onStartComplete callback){
@@ -62,9 +63,9 @@ void defaultStartParsing(void){
 void defaultCompleteParsing(void){
     std::cout <<"defaultCompleteParsing"<< std::endl;
 }
-void defaultOnNumberFound(const char *n){
+void defaultOnNumberFound(int n){
     std::cout <<"defaultOnNumberFound:\n"<< n<< std::endl;
 }
-void defaultOnStringFound(const char *n){
+void defaultOnStringFound(char *n){
     std::cout << "defaultOnStringFound:\n" << n<< std::endl;
 }
