@@ -6,7 +6,7 @@ Matrix::Matrix(int size_row, int size_col) {
     size_rows = size_row;
     size_cols = size_col;
 
-    rows = (Row**) malloc(size_rows*sizeof(Row));
+    rows = (Row**) malloc(size_rows*sizeof(Row*));
     for(int i=0;i<size_rows;i++){
         rows[i] = new Row(size_cols);
     } 
