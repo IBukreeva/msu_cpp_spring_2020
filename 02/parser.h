@@ -1,15 +1,16 @@
 
 void parse(const char * text);
 
-using onStrNum = void(*) (const char* string);
+using onString = void(*) (char* string);
+using onNumber = void(*) (int number);
 using onStartComplete = void(*) (void);
 
-void registerOnStringCallback(onStrNum callback);
-void registerOnNumberCallback(onStrNum callback); 
+void registerOnStringCallback(onString callback);
+void registerOnNumberCallback(onNumber callback); 
 void registerOnStartCallback(onStartComplete callback);
 void registerOnCompleteCallback(onStartComplete callback);
 
 void defaultStartParsing(void);
 void defaultCompleteParsing(void);
-void defaultOnNumberFound(const char *n); //может быть тут надо было сделать число?
-void defaultOnStringFound(const char *n);
+void defaultOnNumberFound(int n);
+void defaultOnStringFound(char *n);
