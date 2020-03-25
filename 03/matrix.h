@@ -13,15 +13,14 @@ public:
 
     Row& operator[] (int x) const;
     void operator*= (int x);
-    bool operator ==(const Matrix&) const;
-    bool operator !=(Matrix&) const;
-    void operator =(Matrix&);
-    Row ** rows;
+    bool operator== (const Matrix&) const;
+    bool operator!= (const Matrix&) const;
+    void operator= (Matrix&);
+    Row ** rows; //мы же меняем матрицу, выходит, она паблик
 
 private:
     int size_rows;
     int size_cols;
-    
 };
- 
+
 #endif /* MATRIX */
