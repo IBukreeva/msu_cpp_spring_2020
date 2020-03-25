@@ -17,3 +17,5 @@ Row.o: Row.cpp Row.h
 
 clean:  
 	rm -rf *.o matrix
+	
+	
