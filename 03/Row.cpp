@@ -9,7 +9,7 @@ Row::Row(int inSize){
 Row::~Row(){
     free(data);
     size=0;
-}  
+}
 
 int Row::getSize() const {
     return size;
@@ -50,7 +50,7 @@ int& Row::operator [](int n) const {
 }
 
 Row& Row::operator =(Row& r){
-    this->~Row();
+    this->~Row(); 
 
     size=r.getSize();
     data = new int[size];
@@ -58,5 +58,5 @@ Row& Row::operator =(Row& r){
         data[i]=r.data[i];
     }
     return *this;
- 
+
 }
