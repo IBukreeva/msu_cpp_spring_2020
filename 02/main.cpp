@@ -1,14 +1,14 @@
 #include <iostream>
 #include "parser.h"
 
-void onNumberFound1(int n){
+void onNumberFound1(const int n){
     std::cout <<"onNumberFound1:\n"<< n<< std::endl;
 }
-void onNumberFound2(int n){
+void onNumberFound2(const int n){
     std::cout << "onNumberFound2:\n" << n<< std::endl;
 }
 
-void onStringFound(char *n){
+void onStringFound(const char *n){
     std::cout << "onStringFound:\n" << n<< std::endl;
 }
 
