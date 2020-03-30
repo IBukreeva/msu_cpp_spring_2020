@@ -1,26 +1,25 @@
 #include "Row.h"
-
 #ifndef MATRIX_H
 #define MATRIX_H
 
 class Matrix {
     friend class Row;
 public:
-    Matrix(int row, int col);
-    virtual ~Matrix();
-    int getRows() const;
-    int getColumns() const;
+    Matrix(size_t row, size_t col);
+    ~Matrix();
+    size_t getRows() const;
+    size_t getColumns() const;
 
-    Row& operator[] (int x) const;
-    void operator*= (int x);
+    Row& operator[] (size_t x) const;
+    Matrix& operator*= (int x);
     bool operator== (const Matrix&) const;
     bool operator!= (const Matrix&) const;
-    void operator= (Matrix&);
-    Row ** rows; //мы же меняем матрицу, выходит, она паблик
-
+    void operator = (Matrix&);
+    
 private:
-    int size_rows;
-    int size_cols;
+    Row * rows;
+    size_t size_rows;
+    size_t size_cols;
 };
 
 #endif /* MATRIX */
