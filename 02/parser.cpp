@@ -9,7 +9,7 @@ onStartComplete onCompleteCall = defaultCompleteParsing;
 
 void parse(const char * text){
 
-    onStartCall(); //мне кажется, что даже если строка пустая, мы же ее рассматриваем и должны об этом сказать
+    onStartCall();
 
     int i=0;
     int len_text=strlen(text);
