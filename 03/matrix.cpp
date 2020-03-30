@@ -1,69 +1,60 @@
 #include <iostream>
 #include "matrix.h"
 
-Matrix::Matrix(int row_size, int col_size) {
+Matrix::Matrix(size_t row_size, size_t col_size) {
     size_rows = row_size;
     size_cols = col_size;
 
-    rows = (Row**) malloc(size_rows*sizeof(Row*));
-    for(int i=0;i<size_rows;i++){
-        rows[i] = new Row(size_cols);
+    rows = new Row[size_rows];
+    for(size_t i=0; i<size_rows;i++){
+        rows[i].init(size_cols);
     }
 }
 
 Matrix::~Matrix() {
-    for(int i=0;i<size_rows;i++){
-        rows[i]->~Row();
-    }
-    free(rows);
+    delete[] rows;
     size_cols=0;
     size_rows=0;
 }
 
-int Matrix::getRows() const{
+size_t Matrix::getRows() const{
     return size_rows;
 }
 
-int Matrix::getColumns() const{
+size_t Matrix::getColumns() const{
     return size_cols;
 }
 
-void Matrix::operator *= (int x){
+Matrix& Matrix::operator *= (int x){
 
-    for(int i=0;i<size_rows;i++){
-        *rows[i] *= x;
+    for(size_t i=0;i<size_rows;i++){
+        //*rows[i] *= x;
+        rows[i] *=x;
     }
+    return *this;
 }
-
 
 bool Matrix::operator ==(const Matrix& matr) const{
 
     if(size_rows!=matr.getRows()) return false;
     if(size_cols!=matr.getColumns()) return false;
 
-    for(int i=0;i<size_rows;i++){
+    for(size_t i=0;i<size_rows;i++){
         if(rows[i]!=matr.rows[i]) return false;
     }
     return true;
 }
 
 bool Matrix::operator !=(const Matrix& matr) const{ 
-
-    if(size_rows!=matr.getRows()) return true;
-    if(size_cols!=matr.getColumns()) return true;
-
-    for(int i=0;i<size_rows;i++){
-        if(*rows[i]!=*matr.rows[i]) return true;
-    }
-    return false;
+    return !(*this==matr);
 }
 
-Row& Matrix::operator[] (int n) const{
-    if(n<0 || n>=size_rows) {
+Row& Matrix::operator[] (size_t n) const{
+    if(n>=size_rows) {
         throw std::out_of_range("");
     }
-
-    return *rows[n];
+    //return *rows[n];
+    return rows[n];
 }
 
 void Matrix::operator =(Matrix& matr){
@@ -71,7 +62,8 @@ void Matrix::operator =(Matrix& matr){
     size_rows = matr.getRows();
     size_cols = matr.getColumns();
 
-    for(int i=0;i<size_rows;i++){
-        *rows[i]=*matr.rows[i];
+    for(size_t i=0;i<size_rows;i++){
+        //*rows[i]=*matr.rows[i];
+        rows[i]=matr.rows[i];
     }
 }
