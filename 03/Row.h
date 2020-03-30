@@ -1,24 +1,26 @@
+#include <iostream>
 #ifndef ROW_H
 #define ROW_H
 
 class Row{
     friend class Matrix;
 public:
-    Row(int x);
-    virtual ~Row();
+    Row(): size(0) { };
+    Row(size_t x);
+    ~Row();
     
-    int getSize() const;
+    size_t getSize() const;
     bool operator ==(Row& row) const;
-    void operator *= (int x);
+    Row& operator *= (int x);
     bool operator != (Row& r) const;
     Row& operator = (Row& r);
-    int& operator [](int x) const;
-    
-    int * data; //мы же меняем строки, выходит, они паблик
+    int& operator [](size_t x) const;
 
 private:
-    int size;
+    int * data;
+    size_t size;
     
+    void init(size_t x);
 };
 
-#endif /* MATRIX */
+#endif /* ROW_H */
