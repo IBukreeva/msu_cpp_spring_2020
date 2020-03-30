@@ -9,14 +9,14 @@ onStartComplete onCompleteCall = defaultCompleteParsing;
 
 void parse(const char * text){
 
-    onStartCall();
+    onStartCall(); //мне кажется, что даже если строка пустая, мы же ее рассматриваем и должны об этом сказать
 
     int i=0;
     int len_text=strlen(text);
     while(i<len_text){
         if(text[i]==' '){ i++; continue;}
 
-        else if(text[i]>='0' && text[i]<='9'){ //можно так находить числа?
+        else if(text[i]>='0' && text[i]<='9'){
             int number = 0; 
             int j=i;
             while(j<len_text && text[j]!=' '){
@@ -63,9 +63,9 @@ void defaultStartParsing(void){
 void defaultCompleteParsing(void){
     std::cout <<"defaultCompleteParsing"<< std::endl;
 }
-void defaultOnNumberFound(int n){
+void defaultOnNumberFound(const int n){
     std::cout <<"defaultOnNumberFound:\n"<< n<< std::endl;
 }
-void defaultOnStringFound(char *n){
+void defaultOnStringFound(const char *n){
     std::cout << "defaultOnStringFound:\n" << n<< std::endl;
 }
