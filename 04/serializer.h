@@ -62,8 +62,6 @@ private:
 
 };
 
-
-
 class Deserializer
 {
     static constexpr char Separator = ' ';
@@ -80,7 +78,7 @@ public:
 
     template <class T>
     Error load(T& object){
-        return object.deserialize(*this); //то есть мы теперь загружаем от аргументов
+        return object.deserialize(*this);
     }
 
     Error load(bool* value){
@@ -137,7 +135,7 @@ public:
         if(text.size()==0) return Error::CorruptedArchive;
         if(text[0]=='-') return Error::CorruptedArchive;
         *value=0;
-        for(size_t i=0;i<text.size();i++){  //нашла только stoi, а ничего про uint64_t не нашла, и поэтому написала так
+        for(size_t i=0;i<text.size();i++){
             if(text[i]<'0' || text[i]>'9') 
                 return Error::CorruptedArchive;
             *value=*value*10+text[i]-'0';
