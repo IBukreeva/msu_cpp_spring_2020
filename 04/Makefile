@@ -12,4 +12,4 @@ test.o: test.cpp serializer.h
 	$(CC) -c test.cpp  
   
 clean:  
-	rm -rf *.o serializer
+	rm -rf *.o serializer 
