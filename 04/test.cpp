@@ -21,7 +21,7 @@ struct Data
     template <class Deserializer>
     Error deserialize(Deserializer& deserializer)
     {
-        return deserializer(&a, &b, &c);
+        return deserializer(&a, &b, &c); //можно было так? просто с сериалайз не получается же присваивать
     }
 };
 
