@@ -39,7 +39,7 @@ private:
     }
 
     Error process(uint64_t& val){
-        out_ << val<< " ";
+        out_ << val << " ";
         return Error::NoError;
     }
 
@@ -61,6 +61,8 @@ private:
     }
 
 };
+
+
 
 class Deserializer
 {
@@ -100,10 +102,11 @@ public:
         std::string text;
         in_ >> text;
 
-        if(text.size()==0) return Error::CorruptedArchive;
+        size_t text_size=text.size();
+        if(text_size==0) return Error::CorruptedArchive;
         if(text[0]=='-') return Error::CorruptedArchive;
         *value=0;
-        for(size_t i=0;i<text.size();i++){  //нашла только stoi, а ничего про uint64_t не нашла, и поэтому написала так
+        for(size_t i=0;i<text_size;i++){  //нашла только stoi, а ничего про uint64_t не нашла, и поэтому написала так
             if(text[i]<'0' || text[i]>'9') 
                 return Error::CorruptedArchive;
             *value=*value*10+text[i]-'0';
@@ -132,10 +135,11 @@ public:
         std::string text;
         in_ >> text;
 
-        if(text.size()==0) return Error::CorruptedArchive;
+        size_t text_size=text.size();
+        if(text_size==0) return Error::CorruptedArchive;
         if(text[0]=='-') return Error::CorruptedArchive;
         *value=0;
-        for(size_t i=0;i<text.size();i++){
+        for(size_t i=0;i<text_size;i++){
             if(text[i]<'0' || text[i]>'9') 
                 return Error::CorruptedArchive;
             *value=*value*10+text[i]-'0';
