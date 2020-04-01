@@ -53,7 +53,6 @@ Row& Matrix::operator[] (size_t n) const{
     if(n>=size_rows) {
         throw std::out_of_range("");
     }
-    //return *rows[n];
     return rows[n];
 }
 
@@ -63,7 +62,6 @@ void Matrix::operator =(Matrix& matr){
     size_cols = matr.getColumns();
 
     for(size_t i=0;i<size_rows;i++){
-        //*rows[i]=*matr.rows[i];
         rows[i]=matr.rows[i];
     }
 }
