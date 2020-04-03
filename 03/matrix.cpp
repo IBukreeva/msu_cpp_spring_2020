@@ -28,7 +28,6 @@ size_t Matrix::getColumns() const{
 Matrix& Matrix::operator *= (int x){
 
     for(size_t i=0;i<size_rows;i++){
-        //*rows[i] *= x;
         rows[i] *=x;
     }
     return *this;
@@ -56,7 +55,7 @@ Row& Matrix::operator[] (size_t n) const{
     return rows[n];
 }
 
-void Matrix::operator =(Matrix& matr){
+void Matrix::operator =(const Matrix& matr){
 
     size_rows = matr.getRows();
     size_cols = matr.getColumns();
