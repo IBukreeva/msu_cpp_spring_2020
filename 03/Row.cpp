@@ -19,7 +19,7 @@ size_t Row::getSize() const {
     return size;
 }
 
-bool Row::operator==(Row& r) const{
+bool Row::operator==(const Row& r) const{
     if(size!=r.getSize()) return false;
 
     for(size_t i=0;i<size;i++){
@@ -28,7 +28,7 @@ bool Row::operator==(Row& r) const{
     return true;
 }
 
-bool Row::operator!=(Row& r) const{
+bool Row::operator!=(const Row& r) const{
     return !(*this==r);
 }
 
@@ -46,10 +46,15 @@ int& Row::operator [](size_t n) const {
     return data[n];
 }
 
-Row& Row::operator =(Row& r){
+Row& Row::operator =(const Row& r){
     
+    if(this==&r)
+        return *this;
+    
+    size = r.getSize();
+    int * tmp = new int[size];
     delete[] data;
-    this->init(r.getSize());
+    data = tmp;
     for(size_t i=0;i<size;i++){
         data[i]=r.data[i];
     }
