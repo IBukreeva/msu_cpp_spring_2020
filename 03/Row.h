@@ -10,10 +10,10 @@ public:
     ~Row();
     
     size_t getSize() const;
-    bool operator ==(Row& row) const;
+    bool operator ==(const Row& row) const;
     Row& operator *= (int x);
-    bool operator != (Row& r) const;
-    Row& operator = (Row& r);
+    bool operator != (const Row& r) const;
+    Row& operator = (const Row& r);
     int& operator [](size_t x) const;
 
 private:
