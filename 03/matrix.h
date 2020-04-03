@@ -14,7 +14,7 @@ public:
     Matrix& operator*= (int x);
     bool operator== (const Matrix&) const;
     bool operator!= (const Matrix&) const;
-    void operator = (Matrix&);
+    void operator = (const Matrix&);
     
 private:
     Row * rows;
