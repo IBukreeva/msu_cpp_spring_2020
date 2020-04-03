@@ -103,7 +103,6 @@ public:
 
         size_t text_size=text.size();
         if(text_size==0) return Error::CorruptedArchive;
-        if(text[0]=='-') return Error::CorruptedArchive;
         *value=0;
         for(size_t i=0;i<text_size;i++){  //нашла только stoi, а ничего про uint64_t не нашла, и поэтому написала так
             if(text[i]<'0' || text[i]>'9') 
@@ -136,7 +135,6 @@ public:
 
         size_t text_size=text.size();
         if(text_size==0) return Error::CorruptedArchive;
-        if(text[0]=='-') return Error::CorruptedArchive;
         *value=0;
         for(size_t i=0;i<text_size;i++){
             if(text[i]<'0' || text[i]>'9') 
