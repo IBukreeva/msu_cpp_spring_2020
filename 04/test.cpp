@@ -12,17 +12,12 @@ struct Data
     bool b;
     uint64_t c;
 
-    template <class Serializer>
-    Error serialize(Serializer& serializer)
+    template <class T>
+    Error serialize(T& arg)
     {
-        return serializer(a, b, c);
+        return arg(a, b, c);
     }
 
-    template <class Deserializer>
-    Error deserialize(Deserializer& deserializer)
-    {
-        return deserializer(&a, &b, &c); //можно было так? просто с сериалайз не получается же присваивать
-    }
 };
 
 int main()
