@@ -1,4 +1,3 @@
-#pragma once
 enum class Error
 {
     NoError,
@@ -21,7 +20,7 @@ public:
     }
 
     template <class... ArgsT>
-    Error operator()(ArgsT... args)
+    Error operator()(ArgsT&&... args)
     {   
         return process(args...);
     }
@@ -46,10 +45,12 @@ private:
 
     template <class... Args>
     Error process(bool& val, Args&&... args){
-        if(val)
-            out_ << "true ";
-        else
-            out_ << "false ";
+    if(val){
+        out_ << "true ";
+    }
+    else{
+        out_ << "false ";
+    }
         return process(std::forward<Args>(args)...);
     }
 
@@ -73,23 +74,23 @@ public:
     }
 
     template <class... ArgsT>
-    Error operator()(ArgsT... args){
-        return load(args...);
+    Error operator()(ArgsT&&... args){
+        return loadProcess(args...);
     }
 
     template <class T>
     Error load(T& object){
-        return object.deserialize(*this);
+        return object.serialize(*this);
     }
 
-    Error load(bool* value){
+    Error loadProcess(bool& value){
         std::string text;
         in_ >> text;
     
         if (text == "true")
-            *value = true;
+            value = true;
         else if (text == "false")
-            *value = false;
+            value = false;
         else
             return Error::CorruptedArchive;
 
@@ -97,52 +98,46 @@ public:
     }
 
 
-    Error load(uint64_t* value){
+    Error loadProcess(uint64_t& value){
         std::string text;
         in_ >> text;
 
         size_t text_size=text.size();
         if(text_size==0) return Error::CorruptedArchive;
-        *value=0;
-        for(size_t i=0;i<text_size;i++){  //нашла только stoi, а ничего про uint64_t не нашла, и поэтому написала так
-            if(text[i]<'0' || text[i]>'9') 
-                return Error::CorruptedArchive;
-            *value=*value*10+text[i]-'0';
-        }
+        if (std::count_if(text.begin(), text.end(), isdigit) != text_size)
+            return Error::CorruptedArchive;
+        value = std::stoull(text);
         
         return Error::NoError;
     }
 
     template <class... Args>
-    Error load(bool* value, Args&&... args){
+    Error loadProcess(bool& value, Args&&... args){
         std::string text;
         in_ >> text;
     
         if (text == "true")
-            *value = true;
+            value = true;
         else if (text == "false")
-            *value = false;
+            value = false;
         else
             return Error::CorruptedArchive;
 
-        return load(args...);
+        return loadProcess(args...);
     }
 
     template <class... Args>
-    Error load(uint64_t* value, Args&&... args){
+    Error loadProcess(uint64_t& value, Args&&... args){
         std::string text;
         in_ >> text;
 
         size_t text_size=text.size();
         if(text_size==0) return Error::CorruptedArchive;
-        *value=0;
-        for(size_t i=0;i<text_size;i++){
-            if(text[i]<'0' || text[i]>'9') 
-                return Error::CorruptedArchive;
-            *value=*value*10+text[i]-'0';
-        }
+        if (std::count_if(text.begin(), text.end(), isdigit) != text_size)
+            return Error::CorruptedArchive;
+        value = std::stoull(text);
         
-        return load(args...);
+        return loadProcess(args...);
     }
 
 private:
