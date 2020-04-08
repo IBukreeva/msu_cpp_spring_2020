@@ -1,3 +1,4 @@
+#pragma once
 enum class Error
 {
     NoError,
@@ -45,12 +46,12 @@ private:
 
     template <class... Args>
     Error process(bool& val, Args&&... args){
-    if(val){
-        out_ << "true ";
-    }
-    else{
-        out_ << "false ";
-    }
+        if(val){
+            out_ << "true ";
+        }
+        else{
+            out_ << "false ";
+        }
         return process(std::forward<Args>(args)...);
     }
 
