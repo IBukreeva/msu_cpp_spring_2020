@@ -1,8 +1,4 @@
 #include "bigint.h"
-/*/
-
-BigInt operator + (const BigInt& left, const BigInt& right)
-/*/
 
 BigInt::BigInt(int x){
     int abs_x = abs(x); 
@@ -242,7 +238,7 @@ BigInt operator + (const BigInt& left, const BigInt& right){
         }
     }
     else{
-        BigInt tmp = -((-left)+(-right));//для класса важен знак нуля, но пользователю нужно передавать только +0
+        BigInt tmp = -((-left)+(-right));//для работы важен знак нуля, но пользователю нужно только +0
         if(strcmp(tmp.number, "0")==0 && tmp.sign=='-'){
             tmp = -tmp;
         }
