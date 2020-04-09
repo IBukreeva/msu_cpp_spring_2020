@@ -16,3 +16,4 @@ bigint.o: bigint.cpp bigint.h
   
 clean:  
 	rm -rf *.o bigIntTest
+ 
