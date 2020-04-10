@@ -178,8 +178,8 @@ void rmLeadZeros(std::string* str){
 BigInt operator + (const BigInt& left, const BigInt& right){
     if(left.sign=='-'){
         if(right.sign=='-'){
-            std::string result(""); //это строка результата сложения
-            uint carry=0; uint sum_tmp = 0; //переменные для промежуточных вычислений
+            std::string result("");
+            uint carry=0; uint sum_tmp = 0;
             size_t min_len = std::min(left.number_len, right.number_len);
             size_t max_len = std::max(left.number_len, right.number_len);
             for(size_t i=0;i<min_len;i++){
@@ -238,7 +238,7 @@ BigInt operator + (const BigInt& left, const BigInt& right){
         }
     }
     else{
-        BigInt tmp = -((-left)+(-right));//для работы важен знак нуля, но пользователю нужно только +0
+        BigInt tmp = -((-left)+(-right));//чтобы возвращать +0
         if(strcmp(tmp.number, "0")==0 && tmp.sign=='-'){
             tmp = -tmp;
         }
