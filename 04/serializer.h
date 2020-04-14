@@ -44,21 +44,14 @@ private:
         return Error::NoError;
     }
 
-    template <class... Args>
-    Error process(bool& val, Args&&... args){
-        if(val){
-            out_ << "true ";
-        }
-        else{
-            out_ << "false ";
-        }
-        return process(std::forward<Args>(args)...);
-    }
-
-    template <class... Args>
-    Error process(uint64_t& val, Args&&... args){
-        out_ << val<< " ";
-        return process(std::forward<Args>(args)...);
+    template <class T, class... Args>
+    Error process(T&& val, Args&&... args){
+        Error er1 = process(val);
+        Error er2 = process(std::forward<Args>(args)...);
+        if( er1==Error::CorruptedArchive || er2==Error::CorruptedArchive)
+            return Error::CorruptedArchive;
+        
+        return Error::NoError;
     }
 
 };
@@ -76,7 +69,7 @@ public:
 
     template <class... ArgsT>
     Error operator()(ArgsT&&... args){
-        return loadProcess(args...);
+        return process(args...);
     }
 
     template <class T>
@@ -84,7 +77,7 @@ public:
         return object.serialize(*this);
     }
 
-    Error loadProcess(bool& value){
+    Error process(bool& value){
         std::string text;
         in_ >> text;
     
@@ -98,8 +91,7 @@ public:
         return Error::NoError;
     }
 
-
-    Error loadProcess(uint64_t& value){
+    Error process(uint64_t& value){
         std::string text;
         in_ >> text;
 
@@ -112,33 +104,14 @@ public:
         return Error::NoError;
     }
 
-    template <class... Args>
-    Error loadProcess(bool& value, Args&&... args){
-        std::string text;
-        in_ >> text;
-    
-        if (text == "true")
-            value = true;
-        else if (text == "false")
-            value = false;
-        else
+    template <class T, class... ArgsT>
+    Error process(T&& val, ArgsT&&... args){
+        Error er1 = process(val);
+        Error er2 = process(std::forward<ArgsT>(args)...);
+        if (er1==Error::CorruptedArchive || er2==Error::CorruptedArchive)
             return Error::CorruptedArchive;
 
-        return loadProcess(args...);
-    }
-
-    template <class... Args>
-    Error loadProcess(uint64_t& value, Args&&... args){
-        std::string text;
-        in_ >> text;
-
-        size_t text_size=text.size();
-        if(text_size==0) return Error::CorruptedArchive;
-        if (std::count_if(text.begin(), text.end(), isdigit) != text_size)
-            return Error::CorruptedArchive;
-        value = std::stoull(text);
-        
-        return loadProcess(args...);
+        return Error::NoError;
     }
 
 private:
