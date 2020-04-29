@@ -78,6 +78,32 @@ void doCheckEqual(const X& actual, const Y& expected, size_t line)
 #define checkEqual(x, y) do { doCheckEqual((x), (y), __LINE__); } while(0)
 #define checkTrue(cond) do { if (!(cond)) std::cout << "at line " << __LINE__ << ": " << #cond << '\n'; } while(0)
 
+static int Counter = 0;
+
+struct Counterable
+{
+    Counterable()
+    {
+        ++Counter;
+    }
+
+    Counterable(const Counterable&)
+    {
+        ++Counter;
+    }
+
+    Counterable& operator=(const Counterable&)
+    {
+        ++Counter;
+        return *this;
+    }
+
+    ~Counterable()
+    {
+        --Counter;
+    }
+};
+
 class Timer
 {
 public:
@@ -178,6 +204,45 @@ int main()
         checkEqual(v[1], 0);
     }
 
+    {
+        Vector<Counterable> v;
+        v.resize(100);
+
+        checkEqual(Counter, 100);
+
+        for (int i = 0; i < 100; ++i)
+        {
+            v.push_back(Counterable());
+        }
+
+        checkEqual(Counter, 200);
+
+        v.resize(150);
+
+        checkEqual(Counter, 150);
+
+        for (int i = 0; i < 100; ++i)
+        {
+            v.pop_back();
+        }
+
+        checkEqual(Counter, 50);
+
+        v.resize(25);
+
+        checkEqual(Counter, 25);
+
+        v.clear();
+
+        checkEqual(Counter, 0);
+
+        v.resize(25);
+
+        checkEqual(Counter, 25);
+    }
+
+    checkEqual(Counter, 0);
+
     int res = 0;
 
     {
@@ -214,5 +279,4 @@ int main()
     }
 
     return res;
-
 }
