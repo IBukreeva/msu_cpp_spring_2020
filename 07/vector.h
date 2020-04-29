@@ -9,8 +9,8 @@ public:
 
     Vector(size_t count=0) :
                     data_size(count), 
-                    data_capacity(count+3),
-                    data(allocator.alloc(data_capacity)){
+                    data_capacity(count+3){
+        data = allocator.alloc(data_capacity);
         for(size_t i=0; i<data_size;i++) 
             allocator.construct(&(data[i]));
     }
