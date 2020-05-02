@@ -73,7 +73,7 @@ public:
         if(new_capacity<=data_capacity) return;
         T *tmp = allocator.alloc(new_capacity);
         for (size_t i=0; i<data_size;i++){
-            tmp[i] = T(data[i]);
+            tmp[i] = data[i];
             allocator.destroy(&data[i]);
         }
         allocator.dealloc(data, data_capacity);
@@ -110,7 +110,7 @@ public:
 
 private:
     Alloc allocator;
-    T *data;
+    T* data;
     size_t data_size;
     size_t data_capacity;
 };
