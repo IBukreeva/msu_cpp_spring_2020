@@ -35,9 +35,11 @@ public:
             data_size--;
             allocator.destroy(&data[data_size]);
         }
-        else{
+        /*/else{
             std::cout << "warning: trying to delete from empty object";
-        }
+            если попробовать удаление из пустого объекта в векторе из STL, то
+            ничего не выводится
+        }/*/
         return;
     }
     
@@ -73,7 +75,7 @@ public:
         if(new_capacity<=data_capacity) return;
         T *tmp = allocator.alloc(new_capacity);
         for (size_t i=0; i<data_size;i++){
-            tmp[i] = data[i];
+            new (&(tmp[i])) T(data[i]); //
             allocator.destroy(&data[i]);
         }
         allocator.dealloc(data, data_capacity);
