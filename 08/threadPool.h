@@ -14,25 +14,24 @@ public:
             threads.emplace_back([this]() {
                 while(true){
                     std::unique_lock<std::mutex> lock(mtx_tasks);
-				    link_cond.wait(lock, [this](){
+		    link_cond.wait(lock, [this](){
                         return (!(tasks.empty()) || is_destructing);
                         });
-				    if (is_destructing) return;
-				    auto task = std::move(tasks.front());
-				    tasks.pop();
+		    if (is_destructing) return;
+		    auto task = std::move(tasks.front());
+		    tasks.pop();
                     lock.unlock(); 
-				    task();
+		    task();
             }});
 
         }
     }
-
-	~ThreadPool(){
+    ~ThreadPool(){
         is_destructing = true;
         link_cond.notify_all();
-		for(size_t i=0; i<pool_size;i++){
-			threads[i].join();
-	    }
+	for(size_t i=0; i<pool_size;i++){
+	    threads[i].join();
+	}
     }
 
     template <class Func, class... Args>
@@ -40,14 +39,14 @@ public:
 
         auto task = std::make_shared<std::packaged_task<decltype(func(args...))()> > (std::bind(func, args...));
         {
-			std::lock_guard<std::mutex> lock(mtx_tasks);
+	    std::lock_guard<std::mutex> lock(mtx_tasks);
             if(is_destructing){
                 throw std::runtime_error("The pool is not active");
             }
-			tasks.emplace([task](){ (*task)(); });
-		}
-		link_cond.notify_one();
-		return task->get_future();
+	    tasks.emplace([task](){ (*task)(); });
+	}
+	link_cond.notify_one();
+	return task->get_future();
     }
 
 private:
