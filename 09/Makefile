@@ -14,5 +14,5 @@ test.o: test.cpp sort.h
 sort.o: sort.cpp sort.h
 	$(CC) -c sort.cpp
 
-clean:  
+clean:   
 	rm -rf *.o sort
