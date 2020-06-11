@@ -59,7 +59,7 @@ int summator(std::string& fname){
     std::condition_variable num_cond; //чтобы когда добавляются новые числа оповещать какой-нибудь поток
     std::vector<int> numbers;
     std::mutex mtx_numbers;
-    bool read_complete=false;
+    bool read_complete=false; //чтобы если файл закончился больше не ждать
 
     auto reading = std::bind(read, std::ref(in), std::ref(mtx_numbers), std::ref(numbers), std::ref(num_cond), std::ref(read_complete));
     auto summaring = std::bind(count_sum, std::ref(mtx_numbers), std::ref(numbers), std::ref(ans_mtx), std::ref(answer), std::ref(num_cond), std::ref(read_complete));
